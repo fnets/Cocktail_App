@@ -4,13 +4,21 @@ var http = require('http')
 
 var app = express();
 app.set('port', process.env.PORT);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req,res){
 	res.send('<html><body><h1>Hello World</h1></body></html>');
 });
-app.get('/:a?/:b?/:c?', function (req,res) {
-	res.send(req.params.a + ' ' + req.params.b + ' ' + req.params.c);
+
+// app.get('/:a?/:b?/:c?', function (req,res) {
+// 	res.send(req.params.a + ' ' + req.params.b + ' ' + req.params.c);
+// });
+
+app.use(function (req,res) {
+    res.render('404', {url:req.url}); 
 });
 
 http.createServer(app).listen(app.get('port'), function(){
