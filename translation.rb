@@ -4,15 +4,16 @@ end
 
 table "cocktails" do
 	column "id", :key, :as => :integer
+	
 	column "api_id", :integer, :references => "apis"
-	# column "cocktail_name", :string
-	# column "recipe_processed", :boolean
-	# column "alcoholic", :boolean
+	column "cocktail_name", :string
+	column "recipe_processed", :boolean
+	column "alcoholic", :boolean
 	column "category", :string
-	# column "drink_thumb", :string
-	# column "instructions", :text
+	column "drink_thumb", :string
+	#column "instructions", :text
 	# column "glass", :string
-	# column "ingredient_1", :string
+#	 column "ingredient_1", :string
 	# column "ingredient_2", :string
 	# column "ingredient_3", :string
 	# column "ingredient_4", :string
@@ -32,35 +33,34 @@ table "cocktails" do
 	# column "ingredient_18", :string
 	# column "ingredient_19", :string
 	# column "ingredient_20", :string
-	# column "ingredient_measure1", :string
-	# column "ingredient_measure2", :string
-	# column "ingredient_measure3", :string
-	# column "ingredient_measure4", :string
-	# column "ingredient_measure5", :string
-	# column "ingredient_measure6", :string
-	# column "ingredient_measure7", :string
-	# column "ingredient_measure8", :string
-	# column "ingredient_measure9", :string
-	# column "ingredient_measure10", :string
-	# column "ingredient_measure11", :string
-	# column "ingredient_measure12", :string
-	# column "ingredient_measure13", :string
-	# column "ingredient_measure14", :string
-	# column "ingredient_measure15", :string
-	# column "ingredient_measure16", :string
-	# column "ingredient_measure17", :string
-	# column "ingredient_measure18", :string
-	# column "ingredient_measure19", :string
-	# column "ingredient_measure20", :string
-	# column "updated_at", :datetime
-	# column "created_at", :datetime
-	# before_save do |row|
- #     begin
- #       row.eventDate = row.eventDate.to_date
- #     rescue => e
- #       puts "Errored eventDate was: #{eventDate}"
- #       raise e
- #     end
- #   end
+	column "ingredient_measure1", :string
+	column "ingredient_measure2", :string
+	column "ingredient_measure3", :string
+	column "ingredient_measure4", :string
+	column "ingredient_measure5", :string
+	column "ingredient_measure6", :string
+	column "ingredient_measure7", :string
+	column "ingredient_measure8", :string
+	column "ingredient_measure9", :string
+	column "ingredient_measure10", :string
+	column "ingredient_measure11", :string
+	column "ingredient_measure12", :string
+	column "ingredient_measure13", :string
+	column "ingredient_measure14", :string
+	column "ingredient_measure15", :string
+	column "ingredient_measure16", :string
+	column "ingredient_measure17", :string
+	column "ingredient_measure18", :string
+	column "ingredient_measure19", :string
+	column "ingredient_measure20", :string
+	column "updated_at", :datetime
+	column "created_at", :datetime
+	before_save do |row|
+      begin
+        row.cocktail_name = row.cocktail_name.force_encoding("UTF-8")
+      rescue => Encoding::UndefinedConversionError
+        puts "Errored eventDate was: #{row.cocktail_name}"
+        raise Encoding::UndefinedConversionError
+      end
+    end
 end
-

@@ -37,4 +37,56 @@ CollectionDriver.prototype.get = function(collectionName, id, callback) { //A
     });
 };
 
+//save new object
+CollectionDriver.prototype.save = function(collectionName, obj, callback) {
+    this.getCollection(collectionName, function(error, the_collection) { 
+      if( error ) callback(error)
+      else {
+        obj.created_at = new Date(); 
+        the_collection.insert(obj, function() {
+          callback(null, obj);
+        });
+      }
+    });
+};
+
+
+//update a specific object
+CollectionDriver.prototype.update = function(collectionName, obj, entityId, callback) {
+    this.getCollection(collectionName, function(error, the_collection) {
+        if (error) callback(error);
+        else {
+            obj._id = ObjectID(entityId); 
+            obj.updated_at = new Date(); 
+            the_collection.save(obj, function(error,doc) { 
+                if (error) callback(error);
+                else callback(null, obj);
+            });
+        }
+    });
+};
+
+//delete specific object
+CollectionDriver.prototype.delete = function(collectionName, entityId, callback) {
+    var self = this;
+    this.getCollection(collectionName, function(error, the_collection) { //A
+        if (error) callback(error);
+        else {
+            self.get(collectionName, entityId, function(error, objs){
+                var objectToDelete = objs;
+                if (error) callback(error);
+                else {
+                    the_collection.remove({'_id':ObjectID(entityId)}, function(error,doc) { //B
+                    var doc_string = "DOCS REMOVED: " + doc;
+                    console.log(doc_string); //sent to SERVER CONSOLE
+                    if (error) callback(error);
+                    else callback(null, objectToDelete);
+                    });
+                } 
+            }); 
+        }
+    });
+};
+
+
 exports.CollectionDriver = CollectionDriver;
