@@ -20,9 +20,9 @@ mongoClient.open(function(err, mongoClient) {
       console.error("Error! Exiting... Must start MongoDB first");
       console.error("Using host %s and port %s", (mongoHost, mongoPort));
 
-      process.exit(1); //D
+      process.exit(1); 
   }
-  var db = mongoClient.db("MyDatabase");  
+  var db = mongoClient.db("test");  
   collectionDriver = new CollectionDriver(db); 
 });
 
@@ -31,9 +31,9 @@ app.use(express.bodyParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/:collection', function(req, res) {
-   var params = req.params; //B
+   var params = req.params;
    collectionDriver.findAll(req.params.collection, function(error, objs) { 
-    	  if (error) { res.send(400, error); } //D
+    	  if (error) { res.send(400, error); }
 	      else { 
 	          if (req.accepts('html')) { 
     	          res.render('data',{objects: objs, collection: req.params.collection}); 
