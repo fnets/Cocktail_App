@@ -20,7 +20,14 @@ app.use(express.static(path.resolve(__dirname, 'static')));
 //var server = app.listen(3000, function() {
 
 app.get('/api/cocktails', function(req, res) {
-  db.collection("cocktails").find().toArray(function(err, docs) {
+  console.log("Query string", req.query);
+  var filter = {};
+  if (req.query.ingredients)
+    filter.ingredients = req.query.ingredients;
+  if (req.query.name)
+    filter.name = req.query.name;
+
+  db.collection("cocktails").find(filter).toArray(function(err, docs) {
     res.json(docs);
   });
 });

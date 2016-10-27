@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 
 var CocktailAdd = React.createClass({
   render: function() {
-  	console.log("Rendering CocktailAdd");
+  	//console.log("Rendering CocktailAdd");
     return (
       <div>
         <form name="cocktailAdd">
