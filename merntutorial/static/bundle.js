@@ -34330,11 +34330,21 @@ var NoMatch = React.createClass({
   displayName: 'NoMatch',
 
   render: function () {
-    return React.createElement('h2', null, 'No match for the route');
+    return React.createElement(
+      'h2',
+      null,
+      'No match for the route'
+    );
   }
 });
 
-ReactDOM.render(React.createElement(Router, null, React.createElement(Route, { path: '/cocktails', component: CocktailList }), React.createElement(Redirect, { from: '/', to: '/cocktails' }), React.createElement(Route, { path: '*', component: NoMatch })), document.getElementById('main'));
+ReactDOM.render(React.createElement(
+  Router,
+  null,
+  React.createElement(Route, { path: '/cocktails', component: CocktailList }),
+  React.createElement(Redirect, { from: '/', to: '/cocktails' }),
+  React.createElement(Route, { path: '*', component: NoMatch })
+), document.getElementById('main'));
 
 },{"./CocktailList":226,"react":222,"react-dom":3,"react-router":33}],224:[function(require,module,exports){
 var React = require('react');
@@ -34345,7 +34355,23 @@ var CocktailAdd = React.createClass({
 
   render: function () {
     //console.log("Rendering CocktailAdd");
-    return React.createElement('div', null, React.createElement('form', { name: 'cocktailAdd' }, React.createElement('input', { type: 'text', name: 'name', placeholder: 'Cocktail Name' }), React.createElement('input', { type: 'text', name: 'ingredients', placeholder: 'Cocktail Ingredients' }), React.createElement('input', { type: 'text', name: 'instructions', placeholder: 'Cocktail Instructions' }), React.createElement('input', { type: 'text', name: 'strMeasure1', placeholder: 'Cocktail Measure' }), React.createElement('button', { onClick: this.handleSubmit }, 'Add Cocktail')));
+    return React.createElement(
+      'div',
+      null,
+      React.createElement(
+        'form',
+        { name: 'cocktailAdd' },
+        React.createElement('input', { type: 'text', name: 'name', placeholder: 'Cocktail Name' }),
+        React.createElement('input', { type: 'text', name: 'ingredients', placeholder: 'Cocktail Ingredients' }),
+        React.createElement('input', { type: 'text', name: 'instructions', placeholder: 'Cocktail Instructions' }),
+        React.createElement('input', { type: 'text', name: 'strMeasure1', placeholder: 'Cocktail Measure' }),
+        React.createElement(
+          'button',
+          { onClick: this.handleSubmit },
+          'Add Cocktail'
+        )
+      )
+    );
   },
 
   handleSubmit: function (e) {
@@ -34378,11 +34404,6 @@ var CocktailFilter = React.createClass({
   },
 
   componentWillReceiveProps: function (newProps) {
-    console.log("componentWillReceiveProps, newProps=", newProps);
-    console.log("componentWillReceiveProps, state=", this.state);
-    console.log("componentWillReceiveProps, state.name=", this.state.name);
-    console.log("componentWillReceiveProps, initFilter.name=", newProps.initFilter.name);
-
     if (newProps.initFilter.name === this.state.name && newProps.initFilter.ingredients === this.state.ingredients) {
       console.log("CocktailFilter: componentWillReceiveProps, no change");
       return;
@@ -34392,7 +34413,6 @@ var CocktailFilter = React.createClass({
   },
 
   onChangeIngredients: function (e) {
-
     this.setState({ ingredients: e.target.value });
   },
 
@@ -34404,7 +34424,6 @@ var CocktailFilter = React.createClass({
     var newFilter = {};
     if (this.state.name) newFilter.name = this.state.name;
     if (this.state.ingredients) newFilter.ingredients = this.state.ingredients;
-    console.log("********Submit, newFilter:", newFilter);
     this.props.submitHandler(newFilter);
   }
 });
@@ -34461,8 +34480,8 @@ var CocktailList = React.createClass({
   componentDidUpdate: function (prevProps) {
     var oldQuery = prevProps.location.query;
     var newQuery = this.props.location.query;
-    console.log('CocktailList: componentDidUpdate newQuery:', newQuery);
-    console.log('CocktailList: componentDidUpdate oldQuery:', oldQuery);
+    // console.log('CocktailList: componentDidUpdate newQuery:',newQuery)
+    // console.log('CocktailList: componentDidUpdate oldQuery:',oldQuery)
     if (oldQuery.ingredients === newQuery.ingredients && oldQuery.name === newQuery.name) {
       console.log("CocktailList: componentDidUpdate, no change in filter, not updating");
       return;
@@ -34475,7 +34494,7 @@ var CocktailList = React.createClass({
   loadData: function () {
     var query = this.props.location.query; // || {};
     var filter = { ingredients: query.ingredients, name: query.name };
-    console.log("CocktailList: componentDidUpdate: Loading data for query", this.props.location.query);
+    // console.log("CocktailList: componentDidUpdate: Loading data for query",this.props.location.query);
 
     $.ajax('/api/cocktails', { data: filter }).done(function (data) {
       this.setState({ cocktails: data });
@@ -34484,7 +34503,7 @@ var CocktailList = React.createClass({
   },
 
   changeFilter: function (newFilter) {
-    console.log("CocktailList: changeFilter: newFilter", newFilter);
+    // console.log("CocktailList: changeFilter: newFilter", newFilter);
     this.props.history.push({ search: '?' + $.param(newFilter) });
     console.log("CocktailList: changeFilter: history push", { search: '?' + $.param(newFilter) });
   },
