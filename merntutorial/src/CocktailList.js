@@ -11,7 +11,9 @@ var CocktailRow = React.createClass({
   	console.log("*******************************Rendering CocktailRow", this.props.cocktail);
     return (
       <tr>
-        <td>{this.props.cocktail._id}</td>
+        <td>
+          <Link to={'/cocktails/' + this.props.cocktail._id}>{this.props.cocktail._id}</Link>
+        </td>
         <td>{this.props.cocktail.name}</td>
         <td>{this.props.cocktail.strMeasure1}</td>
         <td>{this.props.cocktail.ingredients}</td>
@@ -73,8 +75,8 @@ var CocktailList = React.createClass({
   componentDidUpdate: function(prevProps) {
     var oldQuery = prevProps.location.query;
     var newQuery = this.props.location.query;
-    // console.log('CocktailList: componentDidUpdate newQuery:',newQuery)
-    // console.log('CocktailList: componentDidUpdate oldQuery:',oldQuery)
+    console.log('CocktailList: componentDidUpdate newQuery:',newQuery)
+    console.log('CocktailList: componentDidUpdate oldQuery:',oldQuery)
     if (oldQuery.ingredients === newQuery.ingredients &&
         oldQuery.name === newQuery.name) {
       console.log("CocktailList: componentDidUpdate, no change in filter, not updating");
@@ -88,7 +90,7 @@ var CocktailList = React.createClass({
   loadData: function() {
     var query = this.props.location.query;// || {};
     var filter = {ingredients: query.ingredients, name: query.name};
-    // console.log("CocktailList: componentDidUpdate: Loading data for query",this.props.location.query);
+    console.log("CocktailList: componentDidUpdate: Loading data for query",this.props.location.query);
 
     $.ajax('/api/cocktails', {data: filter}).done(function(data) {
       this.setState({cocktails: data});
@@ -97,7 +99,7 @@ var CocktailList = React.createClass({
   },
   
   changeFilter: function(newFilter) {
-    // console.log("CocktailList: changeFilter: newFilter", newFilter);
+    console.log("CocktailList: changeFilter: newFilter", newFilter);
     this.props.history.push({search: '?' + $.param(newFilter)});
     console.log("CocktailList: changeFilter: history push", {search: '?' + $.param(newFilter)});
   },

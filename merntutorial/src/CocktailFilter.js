@@ -33,6 +33,11 @@ var CocktailFilter = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
+    console.log("componentWillReceiveProps, newProps=", newProps);
+    console.log("componentWillReceiveProps, state=", this.state);
+    console.log("componentWillReceiveProps, state.name=", this.state.name);
+    console.log("componentWillReceiveProps, initFilter.name=", newProps.initFilter.name);
+
     if (newProps.initFilter.name === this.state.name
         && newProps.initFilter.ingredients === this.state.ingredients) {
       console.log("CocktailFilter: componentWillReceiveProps, no change");
@@ -43,6 +48,7 @@ var CocktailFilter = React.createClass({
   },
 
   onChangeIngredients: function(e) {
+    
     this.setState({ingredients: e.target.value});
   },
   
@@ -54,6 +60,7 @@ var CocktailFilter = React.createClass({
     var newFilter = {};
     if (this.state.name) newFilter.name = this.state.name;
     if (this.state.ingredients) newFilter.ingredients = this.state.ingredients;
+    console.log("********Submit, newFilter:", newFilter);
     this.props.submitHandler(newFilter);
   }
 });

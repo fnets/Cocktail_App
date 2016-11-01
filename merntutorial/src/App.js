@@ -7,6 +7,8 @@ var Route = require('react-router').Route;
 var Redirect = require('react-router').Redirect;
 
 var CocktailList = require('./CocktailList');
+var CocktailEdit = require('./CocktailEdit');
+
 
 var NoMatch = React.createClass({
   render: function() {
@@ -20,6 +22,7 @@ ReactDOM.render(
   (
     <Router>
       <Route path="/cocktails" component={CocktailList} />
+      <Route path="/cocktails/:id" component={CocktailEdit} />
       <Redirect from="/" to="/cocktails" />
       <Route path="*" component={NoMatch} />
     </Router>
